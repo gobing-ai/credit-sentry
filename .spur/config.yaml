@@ -27,49 +27,6 @@ bootstrap:
   scheduler:
     enabled: false
 
-# ── Spur app section (validated by a local zod schema — UNCHANGED keys) ──
-agent:
-  default: pi
-  executors:
-    - name: pi
-      agent: pi
-    - name: pi-xf
-      agent: pi
-      model: astron-code-latest
-    - name: omp
-      agent: omp
-    - name: omp-zai
-      agent: omp
-      model: zai/glm-5.2
-    - name: omp-xf
-      agent: omp
-      model: astron-code-latest
-    - name: omp-zai-volc
-      agent: omp
-      model: volc/glm-5.2
-    - name: omp-deepseek
-      agent: omp
-      model: deepseek/deepseek-v4-pro
-    - name: minimax
-      agent: omp
-      model: minimax/MiniMax-M3
-    - name: codex
-      agent: codex
-    - name: claude
-      agent: claude
-    - name: grok
-      agent: grok
-  default-by-phase:
-    dev-brainstorm: pi
-    dev-fixall: pi
-    dev-plan: pi
-    dev-run: pi
-    dev-runall: pi
-    dev-changelog: pi
-    dev-gitmsg: pi
-    dev-review: pi
-    dev-verify: pi
-
 rules:
   paths:
     - .spur/rules/**/*.yaml
