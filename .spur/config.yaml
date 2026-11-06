@@ -74,9 +74,9 @@ rules:
   paths:
     - .spur/rules/**/*.yaml
 
-workflows:
-  paths:
-    - .spur/workflows/
+# workflows:
+#   paths:
+#     - .spur/workflows/
 
 redaction:
   enabled: false
