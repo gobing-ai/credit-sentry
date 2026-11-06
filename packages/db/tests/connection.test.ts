@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from 'bun:test';
 import { IN_MEMORY_DATABASE_URL } from '@credit-sentry/config';
-import { createMigratedDatabase, healthCheck, resetDb } from '../src/connection';
+import { createDatabase, createMigratedDatabase, healthCheck, resetDb } from '../src/connection';
 
 const databases: Awaited<ReturnType<typeof createMigratedDatabase>>[] = [];
 
@@ -24,5 +24,17 @@ describe('database lifecycle', () => {
         await resetDb(database);
         const users = await database`SELECT * FROM users`;
         expect(users).toHaveLength(0);
+    });
+
+    it('rethrows when migration fails on an unopenable database', async () => {
+        await expect(createMigratedDatabase('sqlite:///nonexistent-credit-sentry-dir/a.db')).rejects.toThrow(
+            'unable to open database file',
+        );
+    });
+
+    it('reports unhealthy instead of throwing when the connection is closed', async () => {
+        const database = createDatabase(IN_MEMORY_DATABASE_URL);
+        await database.close();
+        expect(await healthCheck(database)).toBe(false);
     });
 });

@@ -11,6 +11,6 @@
     },
     "dependencies": {
         "@credit-sentry/utils": "workspace:*",
-        "@orpc/contract": "^1.14.3"
+        "@orpc/contract": "^1.16.1"
     }
 }

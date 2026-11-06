@@ -22,8 +22,8 @@ tooling/
 
 Workspaces reference each other by the project scope `@credit-sentry/*` (the root `package.json` name).
 
-- **Runtime / package manager / test runner:** Bun `1.3.14`. Prefer `bun:*` APIs over `node:*` unless Bun lacks the API.
-- **Lint + format:** Biome `2.4.16`. No ESLint, no Prettier.
+- **Runtime / package manager / test runner:** Bun `1.4.4`. Prefer `bun:*` APIs over `node:*` unless Bun lacks the API.
+- **Lint + format:** Biome `2.6.5`. No ESLint, no Prettier.
 - **Build orchestration:** dependency-aware Bun `--filter` workspace commands.
 - **Tool versions:** pinned in `.prototools` via [proto](https://moonrepo.dev/proto). Run `proto use` to install.
 - **Git hooks:** Lefthook. **Conventional commits:** cocogitto (`cog`).

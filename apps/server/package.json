@@ -13,7 +13,7 @@
         "@credit-sentry/api": "workspace:*",
         "@credit-sentry/config": "workspace:*",
         "@credit-sentry/utils": "workspace:*",
-        "@orpc/server": "^1.14.3",
-        "hono": "^4.12.21"
+        "@orpc/server": "^1.16.1",
+        "hono": "^4.13.16"
     }
 }

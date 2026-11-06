@@ -12,15 +12,15 @@
     "dependencies": {
         "@credit-sentry/api": "workspace:*",
         "@credit-sentry/utils": "workspace:*",
-        "@orpc/client": "^1.14.3",
-        "@orpc/contract": "^1.14.3",
-        "react": "^19.2.0",
-        "react-dom": "^19.2.0"
+        "@orpc/client": "^1.16.1",
+        "@orpc/contract": "^1.16.1",
+        "react": "^19.3.1",
+        "react-dom": "^19.3.1"
     },
     "devDependencies": {
-        "@types/react": "19.2.2",
-        "@types/react-dom": "19.2.2",
-        "@vitejs/plugin-react": "^6.0.0",
-        "vite": "^8.0.0"
+        "@types/react": "19.3.0",
+        "@types/react-dom": "19.3.0",
+        "@vitejs/plugin-react": "^6.2.1",
+        "vite": "^8.3.6"
     }
 }
