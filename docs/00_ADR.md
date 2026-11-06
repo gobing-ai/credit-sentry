@@ -2,7 +2,7 @@
 doc: 00_ADR
 owns: WHY — cross-cutting decisions and their one-line reasons
 authority: authoritative
-version: 1.1.0
+version: 1.2.0
 owner: Robin Min
 updated_at: 2026-11-05
 read_before: structural changes
@@ -152,3 +152,16 @@ tested vertical slice.
 **Why.** Reusing the existing boundaries avoids a second architecture while preserving auditable records.
 
 **Detail:** `03_ARCHITECTURE` §2–4; `04_DESIGN` §2.
+
+## ADR-011: Explicit local capability for financial RPC
+
+**Status:** Accepted (design) · **Date:** 2026-11-05
+
+**Decision.** Bind the local server to loopback by default. Enable financial operations only with
+an explicitly configured local token and file-backed database; authorize each financial RPC with
+that capability and reject browser-origin requests and non-loopback Host values. Preserve the
+existing demo contract. No remote identity or hosted tenant boundary is introduced.
+
+**Why.** A local financial service must reject unauthorized requests before opening sensitive storage.
+
+**Detail:** `03_ARCHITECTURE` §5; `04_DESIGN` §4.

@@ -2,7 +2,7 @@
 doc: 05_FEATURES
 owns: STATUS — feature decomposition and delivery state
 authority: derived
-version: 1.2.0
+version: 1.3.0
 derived_from: [00_ADR, 01_PRD, 02_ROADMAP]
 owner: Robin Min
 updated_at: 2026-11-05
@@ -30,8 +30,9 @@ their Scope/Notes and cannot imply an implementation commitment.
 
 Detailed Goal/Scope/Gherkin acceptance contracts are tool-owned: [feature index](features/INDEX.md).
 Roots partition product outcomes and shared foundation work, not packages; create children only when a bounded implementation slice
-is ready. Suggested child boundaries and disposition of the A–Z proposal live in the dated review
-under `plans/`; no A1–G9 identifiers are reserved yet.
+is ready. A, B, C, D, F and Z each have three child capabilities in the generated tree;
+E/G remain deferred roots. Tasks 0001 → 0002 deliver the first local CSV audit slice.
+The original A–Z proposal's disposition is retained in the dated review under `plans/`.
 
 The current planet demo and user-table DB pattern are supporting scaffold, verified by their
 existing tests. None of the seven financial capabilities is implemented, including privacy controls.

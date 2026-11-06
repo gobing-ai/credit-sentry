@@ -145,3 +145,4 @@ dist
 /.spur/context/token-ledger.jsonl
 /.spur/context/.session.json
 /.spur/run/
+/.credit-sentry/

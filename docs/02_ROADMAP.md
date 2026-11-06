@@ -2,7 +2,7 @@
 doc: 02_ROADMAP
 owns: WHEN — phases, sequencing, and current versus deferred work
 authority: derived
-version: 1.2.0
+version: 1.3.0
 derived_from: [00_ADR, 01_PRD, 05_FEATURES]
 owner: Robin Min
 updated_at: 2026-11-05
@@ -20,6 +20,7 @@ Goal: align requirements, boundaries and a testable first slice.
 - [x] Bun monorepo scaffold — apps and packages exist; financial behavior does not.
 - [ ] Z: maintain shared configuration, verification infrastructure, packaging instructions and documentation as their delivery slices require.
 - [x] Review drafts and establish first-level feature tree — see `05_FEATURES` and the dated review in `plans/`.
+- [x] Decompose the local MVP one level — A/B/C/D/F/Z each have three children; tasks 0001 → 0002 define the CSV slice.
 - [ ] Select pilot bank/export formats and obtain a labeled, shareable fixture corpus.
 - [ ] Confirm remote extraction provider, data handling and a cost cap, or keep extraction offline.
 

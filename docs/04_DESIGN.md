@@ -2,7 +2,7 @@
 doc: 04_DESIGN
 owns: SURFACE — commands, configuration, schemas, and DTO shapes
 authority: derived
-version: 1.1.0
+version: 1.2.0
 derived_from: [00_ADR, 01_PRD, 03_ARCHITECTURE]
 owner: Robin Min
 updated_at: 2026-11-05
@@ -113,3 +113,9 @@ The pilot corpus must cover at least two declared export layouts, overlapping pe
 history and the negative controls above before Phase 1.5 exits. Unsupported layouts remain listed
 as unsupported. Generalization to untested banks is not an acceptance claim. Existing code gate
 thresholds remain owned by `bunfig.toml` and the Spur rules, not by this planning document.
+
+## 4. First CSV slice (accepted design — ADR-011; not yet built)
+
+The additive command, local-capability and CSV contracts are maintained in
+[first CSV audit design](design/first-csv-audit.md). It specializes the values and lifecycle above;
+other financial capabilities remain planned.
