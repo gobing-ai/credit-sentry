@@ -57,3 +57,7 @@ rules:
             - "**/dist/**"
             # The output seam: logger writes to Bun.stdout/stderr by design.
             - "packages/utils/src/logger.ts"
+            # The finance ledger seam: owner-private SQLite persistence (0o700 dir, 0o600
+            # O_EXCL|O_NOFOLLOW file) is packages/db/src/finance.ts's contract, verified by
+            # apps/server/tests/finance.test.ts permission scenarios.
+            - "packages/db/src/finance.ts"
