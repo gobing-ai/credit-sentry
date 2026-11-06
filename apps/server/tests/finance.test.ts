@@ -45,7 +45,7 @@ async function fixture(options: { token?: string; databaseUrl?: string } = {}) {
     const server = Bun.serve({ hostname: '127.0.0.1', port: 0, fetch: app.fetch });
     servers.push(server);
     const url = `http://127.0.0.1:${server.port}`;
-    const request = async (method: string, input: unknown, headers: Record<string, string> = {}) =>
+    const request = async (method: string, input: unknown, headers: Record<string, string | undefined> = {}) =>
         fetch(`${url}/rpc/finance/${method}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, ...headers },
@@ -89,7 +89,7 @@ describe('local financial RPC end to end', () => {
             headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
             body: JSON.stringify({ json: { accountId: f.account.id } }),
         });
-        expect((await res.json()).json).toEqual(ledger);
+        expect(((await res.json()) as { json: unknown }).json).toEqual(ledger);
         await Bun.write(
             '.spur/run/first-csv/artifacts/import-evidence.json',
             JSON.stringify({ review, ledger }, null, 2),
