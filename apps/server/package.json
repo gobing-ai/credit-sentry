@@ -12,6 +12,7 @@
     "dependencies": {
         "@credit-sentry/api": "workspace:*",
         "@credit-sentry/config": "workspace:*",
+        "@credit-sentry/db": "workspace:*",
         "@credit-sentry/utils": "workspace:*",
         "@orpc/server": "^1.16.1",
         "hono": "^4.13.16"

@@ -10,6 +10,7 @@
         "typecheck": "tsc --noEmit"
     },
     "dependencies": {
+        "@credit-sentry/api": "workspace:*",
         "@credit-sentry/config": "workspace:*"
     },
     "peerDependencies": {

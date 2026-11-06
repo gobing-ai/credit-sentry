@@ -1,4 +1,7 @@
 import type { SQL } from 'bun';
+
+export { FinanceStorageError, FinanceStore, openFinanceDatabase } from './finance';
+
 import {
     closeDb,
     createDatabase,
