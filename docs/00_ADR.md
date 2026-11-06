@@ -1,3 +1,15 @@
+---
+doc: 00_ADR
+owns: WHY — cross-cutting decisions and their one-line reasons
+authority: authoritative
+version: 1.1.0
+owner: Robin Min
+updated_at: 2026-11-05
+read_before: structural changes
+edit_rules: 99 §6.1
+sync: [T1, T2]
+---
+
 # 00 — Architecture Decision Record (Monorepo)
 
 > **Status:** Accepted · **Date:** 2026-05-28 · **Scope:** project-wide, binding.
@@ -98,3 +110,45 @@ Workspaces reference each other by scope `@credit-sentry/*` (the root `package.j
 - **Auth / sessions** — none; an auth boundary is a future ADR (likely server middleware + a contract convention).
 - **Persistence / migrations** — `packages/db` shows the pattern; the actual DB and migration tooling are deferred to the consuming project.
 - **Deployment topology** — apps are independently deployable; orchestration is out of scope here.
+
+**Amendment (2026-11-05).** ADR-008–010 below specialize the starter for CreditSentry; historical
+demo decisions describe the scaffold, not delivered financial capabilities. ADR-006's Bun pin is
+historical: `.prototools` and `package.json` currently pin 1.4.4. Persistence planning is now covered
+by ADR-010; hosted auth and deployment remain deferred.
+
+## ADR-008: Local single-user workflow before hosted automation
+
+**Status:** Accepted (design) · **Date:** 2026-11-05
+
+**Decision.** Develop a local, single-user statement-auditing workflow within the existing Bun
+workspaces. Keep Workers/D1, SaaS billing, mailbox polling and third-party plugin loading deferred.
+
+**Why.** Import-to-report correctness must be demonstrated before adding unattended or multi-user operation.
+
+**Detail:** `01_PRD` §2; `03_ARCHITECTURE` §2; `02_ROADMAP`.
+
+## ADR-009: AI proposes data; validated records and deterministic rules govern findings
+
+**Status:** Accepted (design) · **Date:** 2026-11-05
+
+**Decision.** Treat extracted/model-generated data as untrusted candidates; validate and review
+before ledger admission. Require explicit remote-processing consent and evidence-backed,
+deterministic anomaly findings. No autonomous financial actions or zero-knowledge claim.
+
+**Why.** A plausible extraction or explanation is insufficient evidence for a financial finding.
+
+**Detail:** `03_ARCHITECTURE` §3–5; `04_DESIGN` §2.
+
+## ADR-010: Exact money and source provenance in the existing database boundary
+
+**Status:** Accepted (design) · **Date:** 2026-11-05
+
+**Decision.** Extend `packages/db` using its existing Bun SQL/SQLite pattern with versioned
+migrations, exact minor-unit amounts, account-scoped identity and source provenance. Keep financial
+domain behavior server-owned and API schemas in `packages/api`; do not add parallel core/parser
+packages or a new DB abstraction now. Specializes ADR-005; its demo remains until replaced by a
+tested vertical slice.
+
+**Why.** Reusing the existing boundaries avoids a second architecture while preserving auditable records.
+
+**Detail:** `03_ARCHITECTURE` §2–4; `04_DESIGN` §2.
