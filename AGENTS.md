@@ -85,6 +85,7 @@ bun run format     # biome check --write                (autofix)
 bun run autofix    # format then workspace typecheck
 bun run test       # one bun test run over apps + packages (writes .coverage/lcov.info)
 bun run spur-check # lint + spur pre-check rules + test + coverage/TSDoc post-check
+bun run gate       # final gate: format, build, then spur-check
 bun run build      # build server, web, and cli workspaces
 bun run dev        # run available app dev scripts
 ```
@@ -94,6 +95,8 @@ Default dev ports: server `3000`, web `5173`. The web client reads `VITE_API_URL
 CLI binary: `apps/cli` exposes `bin: { cli: "./src/index.ts" }` — the `.ts` entry runs only under Bun. To ship for Node consumers, repoint `bin` to `./dist/index.js` and run `bun run build` before publishing.
 
 ## Verification gate (all must pass before "done")
+
+`bun run gate` runs the whole gate in one command (format → build → spur-check). It covers steps 1–3 below plus the spur pre/post-check rules.
 
 1. `bun run lint` clean — Biome and Bun workspace typecheck.
 2. `bun run test` passes; no test skipped, `.skip`'d, or commented out to go green.

@@ -20,6 +20,7 @@
         "test-post-check:full": "spur rule run --preset recommended-post-check --fail-on warning --verbose",
         "spur-check": "bun run lint && bun run test-pre-check && bun run test && bun run test-post-check",
         "spur-check:full": "bun run lint && bun run test-pre-check:full && bun run test:full && bun run test-post-check:full",
+        "gate": "bun run format && bun run build && bun run spur-check",
         "typecheck": "bun run --filter './apps/*' --filter './packages/*' typecheck",
         "lint": "biome check . && bun run typecheck",
         "format": "biome check . --write",
