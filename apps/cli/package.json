@@ -1,0 +1,20 @@
+{
+    "name": "@credit-sentry/cli",
+    "type": "module",
+    "private": true,
+    "bin": {
+        "cli": "./src/index.ts"
+    },
+    "scripts": {
+        "start": "bun run src/index.ts",
+        "build": "bun build src/index.ts --target=bun --outdir=dist",
+        "test": "NODE_ENV=test bun test --coverage --coverage-dir=.coverage --reporter=dots",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@credit-sentry/api": "workspace:*",
+        "@credit-sentry/utils": "workspace:*",
+        "@orpc/client": "^1.14.3",
+        "@orpc/contract": "^1.14.3"
+    }
+}

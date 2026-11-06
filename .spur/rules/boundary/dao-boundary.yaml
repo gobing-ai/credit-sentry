@@ -1,0 +1,48 @@
+# DAO / database boundary rules — keep DB access centralized in packages/db,
+# keep raw SQL out of apps and non-DB packages, and forbid non-portable
+# `.sql` text imports.
+#
+# This file previously carried Drizzle-specific rules
+# (`ts-db-only-in-domain`, `drizzle-only-in-domain-schema`,
+# `tables-via-defineTable`, `no-hand-written-ddl-for-drizzle-tables`) inherited
+# from a project that uses `@gobing-ai/ts-db` + Drizzle. credit-sentry uses Bun-native
+# SQL via `bun`'s `SQL` tagged template, so those rules did not apply and were
+# either silently inert or false-positive against legitimate
+# `database\`CREATE TABLE ...\`` template literals.
+
+rules:
+  - id: raw-sql-only-in-domain
+    description: >
+      Raw SQL string literals (SELECT/INSERT/UPDATE/DELETE/CREATE TABLE) must
+      stay inside `packages/db`. Apps and other packages query through store
+      functions exported by `@credit-sentry/api`, never inline SQL.
+    severity: error
+    evaluator:
+      type: rg
+      config:
+        pattern: "(SELECT |INSERT INTO|UPDATE |DELETE FROM|CREATE TABLE)"
+    include:
+      - "apps/**/src/**/*.ts"
+      - "packages/**/src/**/*.ts"
+    exclude:
+      - "**/node_modules/**"
+      - "**/tests/**"
+      - "**/db/**"
+
+  - id: no-sql-text-imports
+    description: >
+      `.sql` text imports (`import ... from './x.sql' with { type: 'text' }`)
+      are non-portable through build/publish and are forbidden. Inline SQL in
+      `.ts` via the `bun` `SQL` tagged template, or call `migrateDatabase`
+      from `@credit-sentry/db`.
+    severity: error
+    evaluator:
+      type: rg
+      config:
+        pattern: "from\\s+['\"][^'\"]*\\.sql['\"]"
+    include:
+      - "apps/**/src/**/*.ts"
+      - "packages/**/src/**/*.ts"
+    exclude:
+      - "**/node_modules/**"
+      - "**/tests/**"

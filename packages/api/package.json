@@ -1,0 +1,16 @@
+{
+    "name": "@credit-sentry/api",
+    "type": "module",
+    "private": true,
+    "exports": {
+        ".": "./src/index.ts"
+    },
+    "scripts": {
+        "test": "NODE_ENV=test bun test --coverage --coverage-dir=.coverage --reporter=dots",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@credit-sentry/utils": "workspace:*",
+        "@orpc/contract": "^1.14.3"
+    }
+}

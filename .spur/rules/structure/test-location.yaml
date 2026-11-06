@@ -1,0 +1,44 @@
+# Test-location rules — local override for the apps/ + packages/ monorepo layout.
+# Shadows the global structure/test-location.yaml.
+#
+# no-tests-dir: forbids __tests__/ directories and src/-adjacent tests.
+# require-corresponding-test: info severity — credit-sentry may bundle related tests
+#   rather than enforcing strict 1:1 src→test correspondence.
+rules:
+  - id: no-tests-dir
+    description: "Tests must live in tests/ directories at the same level as src/, not in __tests__."
+    severity: error
+    evaluator:
+      type: test-location
+      config:
+        expected: "**/*.test.*"
+        forbid:
+          - "**/__tests__/**"
+          - "**/src/**/*.test.ts"
+          - "**/src/**/*.test.tsx"
+        requireCorrespondingTest: false
+    include:
+      - "apps/**/tests/**/*.test.ts"
+      - "packages/**/tests/**/*.test.ts"
+      - "apps/**/tests/**/*.test.tsx"
+      - "packages/**/tests/**/*.test.tsx"
+    exclude:
+      - "**/node_modules/**"
+
+  - id: require-corresponding-test
+    description: "Every source file must have a corresponding test."
+    severity: error
+    evaluator:
+      type: test-location
+      config:
+        expected: "**/*.test.*"
+        requireCorrespondingTest: true
+    include:
+      - "apps/**/src/**/*.ts"
+      - "packages/**/src/**/*.ts"
+    exclude:
+      - "**/index.ts"
+      - "**/*.d.ts"
+      - "**/types.ts"
+      - "**/node_modules/**"
+      - "**/tests/**"

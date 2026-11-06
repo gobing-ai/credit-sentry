@@ -1,0 +1,35 @@
+{
+    "name": "credit-sentry",
+    "version": "0.0.0",
+    "type": "module",
+    "private": true,
+    "packageManager": "bun@1.3.14",
+    "workspaces": [
+        "apps/*",
+        "packages/*"
+    ],
+    "scripts": {
+        "prepare": "lefthook install",
+        "dev": "bun run --if-present --filter './apps/*' --filter './packages/*' dev",
+        "build": "bun run --if-present --filter './apps/*' --filter './packages/*' build",
+        "test": "NODE_ENV=test bun test --dots apps packages",
+        "test:full": "NODE_ENV=test bun test apps packages",
+        "test-pre-check": "spur rule run --preset recommended-pre-check --fail-on warning --verbose",
+        "test-post-check": "spur rule run --preset recommended-post-check --fail-on warning --verbose",
+        "test-pre-check:full": "spur rule run --preset recommended-pre-check --fail-on warning --verbose",
+        "test-post-check:full": "spur rule run --preset recommended-post-check --fail-on warning --verbose",
+        "spur-check": "bun run lint && bun run test-pre-check && bun run test && bun run test-post-check",
+        "spur-check:full": "bun run lint && bun run test-pre-check:full && bun run test:full && bun run test-post-check:full",
+        "typecheck": "bun run --filter './apps/*' --filter './packages/*' typecheck",
+        "lint": "biome check . && bun run typecheck",
+        "format": "biome check . --write",
+        "autofix": "bun run format && bun run typecheck",
+        "check": "bun run lint && bun run test",
+        "check:full": "bun run lint && bun run test:full"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "2.4.16",
+        "@types/bun": "1.3.14",
+        "typescript": "~5.9.0"
+    }
+}

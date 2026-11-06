@@ -1,0 +1,48 @@
+$schema: "@gobing-ai/spur/schemas/preset.schema.json"
+# Recommended pre-check preset — portable rule categories from global install.
+# Use with: spur rule run --preset recommended-pre-check
+#
+# Runs BEFORE tests (test-pre-check). TypeScript quality, structural, DB
+# boundary, and CLI surface consistency rules. TSDoc exports run in post-check
+# alongside coverage-gate.
+name: recommended-pre-check
+extends:
+  - typescript
+  - structure
+  - boundary
+  - surface
+# Disable rules inherited from the global install that do not apply to credit-sentry.
+# Each entry below was authored for a project with a different architecture
+# (Drizzle + @gobing-ai/ts-db, a Vite web app with `apps/web/tests/` DOM
+# helpers, a Vue UI seam, a planning-folder convention) and either:
+#   - targets file globs that do not exist in credit-sentry (rg evaluator fails with
+#     "no files were searched"), or
+#   - enforces an architecture credit-sentry does not adopt.
+# Disabling here is preferred to deleting the global rule files: it documents
+# the intent and survives a `bun install` that refreshes the cache.
+disable:
+  # Stale Drizzle / @gobing-ai/ts-db architecture assumptions. credit-sentry uses
+  # Bun-native SQL via `bun`'s `SQL` tagged template. Local
+  # `boundary/dao-boundary.yaml` enforces the actually-applicable rules.
+  - ts-db-only-in-domain
+  - drizzle-only-in-domain-schema
+  - tables-via-defineTable
+  - no-hand-written-ddl-for-drizzle-tables
+  # happy-dom + module-mock rules target `apps/web/tests/**/*.test.ts` DOM
+  # helper patterns. credit-sentry web tests have no DOM layer (no `apps/web/tests/`
+  # directory); the rules' rg include globs match zero files and abort with
+  # "no files were searched".
+  - guarded-happy-dom-register
+  - happy-dom-teardown-via-helper
+  - no-leaky-mock-module
+  - no-module-scope-import-calls
+  - no-unmocked-module-eval-side-effects
+  # UI / planning / vendor / runtime-path rules apply to the Vue + Cloudflare
+  # Workers + task-planning architecture the global preset was authored for.
+  # credit-sentry has none of: a `ui/` folder, `.tasks/config.jsonc`, vendor
+  # references, or a runtime path-mapping convention.
+  - structured-config-loader-only-in-config
+  - no-legacy-tasks-config-jsonc
+  - no-hardcoded-planning-folder
+  - sp-no-vendor-refs
+  - sp-runtime-path

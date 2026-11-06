@@ -1,0 +1,26 @@
+{
+    "name": "@credit-sentry/web",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "test": "NODE_ENV=test bun test --coverage --coverage-dir=.coverage --reporter=dots",
+        "typecheck": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@credit-sentry/api": "workspace:*",
+        "@credit-sentry/utils": "workspace:*",
+        "@orpc/client": "^1.14.3",
+        "@orpc/contract": "^1.14.3",
+        "react": "^19.2.0",
+        "react-dom": "^19.2.0"
+    },
+    "devDependencies": {
+        "@types/react": "19.2.2",
+        "@types/react-dom": "19.2.2",
+        "@vitejs/plugin-react": "^6.0.0",
+        "vite": "^8.0.0"
+    }
+}
