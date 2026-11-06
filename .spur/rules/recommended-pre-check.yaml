@@ -1,17 +1,19 @@
 $schema: "@gobing-ai/spur/schemas/preset.schema.json"
-# Recommended pre-check preset — portable rule categories from global install.
+# Recommended pre-check preset — portable rule categories bundled with the catalog.
 # Use with: spur rule run --preset recommended-pre-check
 #
-# Runs BEFORE tests (test-pre-check). TypeScript quality, structural, DB
-# boundary, and CLI surface consistency rules. TSDoc exports run in post-check
-# alongside coverage-gate.
+# Runs BEFORE tests (test-pre-check). Extends typescript, structure, boundary,
+# surface and strict, mirroring spur upstream. The upstream `ui` category (spur's
+# daisyUI web seam) and `docs` (advisory citations) stay out. TSDoc exports run in
+# post-check alongside coverage-gate.
 name: recommended-pre-check
 extends:
   - typescript
   - structure
   - boundary
   - surface
-# Disable rules inherited from the global install that do not apply to credit-sentry.
+  - strict
+# Disable rules inherited from the bundled spur catalog that do not apply to credit-sentry.
 # Each entry below was authored for a project with a different architecture
 # (Drizzle + @gobing-ai/ts-db, a Vite web app with `apps/web/tests/` DOM
 # helpers, a Vue UI seam, a planning-folder convention) and either:
@@ -46,3 +48,11 @@ disable:
   - no-hardcoded-planning-folder
   - sp-no-vendor-refs
   - sp-runtime-path
+  # Spur-source-repo-only rules: the `plugins/sp/` bundle, its `scripts/commands`
+  # placement contract, the `@gobing-ai/spur-app/testing` mock subpath, and DOM
+  # test idioms (credit-sentry web tests have no DOM layer).
+  - sp-plugin-standalone
+  - sp-script-placement
+  - no-testing-subpath-import
+  - no-relative-testing-module-import
+  - prefer-accessible-role-for-button-queries

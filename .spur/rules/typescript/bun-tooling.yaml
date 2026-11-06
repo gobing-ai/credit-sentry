@@ -6,7 +6,6 @@ include:
   - "package.json"
   - "apps/**/*.ts"
   - "packages/**/*.ts"
-  - ".spur/**/*.yaml"
 exclude:
   - "**/node_modules/**"
   - "**/dist/**"
@@ -25,8 +24,7 @@ rules:
       - "packages/*/package.json"
       - "**/*.yml"
       - "**/*.yaml"
-    exclude:
-      - ".spur/rules/**"
+    # `.spur/rules/**` needs no exclude: ripgrep never descends into hidden dirs.
 
   - id: enforce-bun-test
     description: "Unit/integration tests must use bun:test, not Jest or Mocha."

@@ -1,40 +1,36 @@
-# Spur Rules
+# credit-sentry spur rules
 
-This directory is the **single source of truth** for Spur's quality-gate ruleset.
-It is self-contained and authoritative — `spur rule run` resolves all categories
-and presets from local `.spur/rules/**/*.yaml` with no fallback to a global
-install or to ts-libs.
+Local quality-gate ruleset, adapted from spur's own `.spur/rules/` (upstream:
+`spur-new/.spur/rules`). `spur rule run` layers these files over the catalog
+bundled with the installed spur (`config/rules/**`): a local file with the same
+category and filename shadows the bundled one, and bundled rules with no local
+counterpart still run unless a preset lists them under `disable`.
+
+Upstream rules are tuned to spur's source repo (`packages/app`, `packages/domain`,
+`plugins/sp`, Drizzle). Files here are re-scoped to `apps/**` + `packages/**`;
+rules for an architecture credit-sentry does not have are disabled in
+`recommended-pre-check.yaml`, each with its reason.
 
 ## Categories
 
 | Category | Dir | Purpose |
 | --- | --- | --- |
-| `typescript` | `typescript/` | TypeScript tooling, output boundaries, biome-suppression ban, no `debugger` |
-| `strict` | `strict/` | Opt-in strict rules (runtime boundaries, HTTP boundaries, structural) |
-| `boundary` | `boundary/` | DB/DAO boundary enforcement |
-| `structure` | `structure/` | File layout, protected files, no focused/skipped tests |
-| `quality` | `quality/` | Post-test gates (coverage) |
-| `surface` | `surface/` | CLI surface consistency (registerXxxCommand wiring, --json serialization) |
+| `typescript` | `typescript/` | Bun tooling, output boundaries, biome/eslint-suppression ban, no `debugger`, mock hygiene |
+| `strict` | `strict/` | Runtime boundaries (spawn/fs seams), HTTP boundaries, rule-file structure |
+| `boundary` | `boundary/` | Bun SQL boundary, env-var gateway (ADR-007), config loading |
+| `structure` | `structure/` | Test layout, protected files, no focused/skipped tests, no scratch verdict pointers |
+| `quality` | `quality/` | Post-test gates (coverage, TSDoc on exports) |
+| `surface` | `surface/` | CLI surface consistency — disabled until a Commander CLI exists |
+| `migration` | `migration/` | regex → `rg` evaluator dialect check (on demand) |
+
+Upstream `ui/` (spur's daisyUI web seam) and `docs/` (advisory citation checks)
+are not adopted.
 
 ## Presets
 
 | Preset | When | Extends |
 | --- | --- | --- |
-| `recommended-pre-check` | Before tests | `typescript`, `structure`, `boundary`, `surface` |
+| `recommended-pre-check` | Before tests | `typescript`, `structure`, `boundary`, `surface`, `strict` |
 | `recommended-post-check` | After tests | `quality` |
-| `strict-check` | Opt-in | `strict` |
-
-## Relationship to ts-libs
-
-Rules originally authored in `ts-libs/.spur/rules/` were **absorbed and adapted**
-(here, not copied verbatim). Each absorbed file carries an `Absorbed from
-ts-libs/.spur/rules/...` header documenting what was re-scoped, omitted, or
-tuned for Spur's app-repo layout. After absorption, ts-libs and spur-new
-maintain their rulesets independently.
-
-## Not absorbed (Spur-irrelevant)
-
-- `typescript/esm-build-conventions` — governs ts-libs' library publish/dist
-  flow. Spur apps don't publish libraries this way.
-- `migration/rg-dialect` — one-time grep→rg migration helper.
-- `migration/rg-migration` — one-time grep→rg migration helper.
+| `strict-check` | On demand, strict only | `strict` |
+| `rg-migration` | On demand | `migration` |
